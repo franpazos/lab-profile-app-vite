@@ -1,0 +1,17 @@
+.loginpage {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.loginpage .form-section form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.loginpage .btn-section {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}

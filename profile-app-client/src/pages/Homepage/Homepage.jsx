@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 
 function Homepage() {
+
+
+
     return (
         <div className="homepage">
             <div className="text">

@@ -2,9 +2,11 @@ import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
 
+import './SignupPage.css'
+
 const API_URL = "http://localhost:5005"
 
-function SignupPage() {
+function SignupPage(props) {
 
     const [userData, setUserData] = useState({
         username: "",
@@ -12,6 +14,8 @@ function SignupPage() {
         campus: "",
         course: ""
     })
+
+    const [errorMessage, setErrorMessage] = useState(undefined)
 
     const navigate = useNavigate()
 
@@ -23,21 +27,34 @@ function SignupPage() {
         }))
     }
 
+    const handleSignUpSubmit = e => {
+        e.preventDefault()
+
+        const requestBody = { username, password, campus, course }
+
+        axios
+            .post(`${API_URL}/auth/signup`, requestBody)
+            .then(() => navigate('/login'))
+            .catch(err => {
+                const errorDescription = err.response.data.message
+                setErrorMessage(errorDescription)
+            })
+    }
 
     return (
-        <div className="signuppage">
+        <div className="signup-page">
 
-            <div className="form">
+            <section className="form-section">
 
                 <h1>Sign Up</h1>
 
-                <form onSubmit="">
+                <form onSubmit={handleSignUpSubmit}>
 
                     <label>Username:</label>
                     <input
                         type="text"
                         name="username"
-                        value={username}
+                        value={userData.username}
                         onChange={handleInputChange}
                     />
 
@@ -45,7 +62,7 @@ function SignupPage() {
                     <input
                         type="password"
                         name="password"
-                        value={password}
+                        value={userData.password}
                         onChange={handleInputChange}
                     />
 
@@ -53,7 +70,7 @@ function SignupPage() {
                     <input
                         type="text"
                         name="campus"
-                        value={campus}
+                        value={userData.campus}
                         onChange={handleInputChange}
                     />
 
@@ -61,15 +78,26 @@ function SignupPage() {
                     <input
                         type="text"
                         name="course"
-                        value={course}
+                        value={userData.course}
                         onChange={handleInputChange}
                     />
-
                 </form>
-            </div>
-            <div className="btn">
 
-            </div>
+                {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+            </section>
+
+            <section className="btn-section">
+                <div className="title">
+                    <h1>Hello!!!</h1>
+                    <h2>Welcome to IronProfile!</h2>
+                </div>
+
+                <div className="btn">
+                    <p>If you signup, you agree with all our terms and conditions where we can do whatever we want with the data</p>
+                    <Link to={"/login"}><button>Create the account</button></Link>
+                </div>
+            </section>
         </div>
     )
 }
