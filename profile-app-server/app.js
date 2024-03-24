@@ -1,5 +1,4 @@
-// ℹ️ Gets access to environment variables/settings
-// https://www.npmjs.com/package/dotenv
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -13,19 +12,24 @@ require("./db");
 const express = require("express");
 const app = express();
 
+app.use(cors())
+
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 
 require("./config")(app);
 
 // 👇 Start handling routes here
 
-const { isAuthenticated } = require("./middleware/jwt.middleware")
+
+
+const authRoutes = require("./routes/auth.routes");
+app.use("/auth", authRoutes);
+
+const { isAuthenticated } = require("./middleware/jwt.middleware");
 
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", isAuthenticated, indexRoutes);
 
-const authRoutes = require("./routes/auth.routes");
-app.use("/auth", authRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 
