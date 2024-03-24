@@ -30,7 +30,14 @@ function SignupPage(props) {
     const handleSignUpSubmit = e => {
         e.preventDefault()
 
-        const requestBody = { username, password, campus, course }
+        console.log("Clicked")
+
+        const requestBody = {
+            username: userData.username,
+            password: userData.password,
+            campus: userData.campus,
+            course: userData.course
+        }
 
         axios
             .post(`${API_URL}/auth/signup`, requestBody)
@@ -81,6 +88,11 @@ function SignupPage(props) {
                         value={userData.course}
                         onChange={handleInputChange}
                     />
+
+                    <div className="btn">
+                        <p>If you signup, you agree with all our terms and conditions where we can do whatever we want with the data</p>
+                        <button type="submit">Create the account</button>
+                    </div>
                 </form>
 
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -91,11 +103,6 @@ function SignupPage(props) {
                 <div className="title">
                     <h1>Hello!!!</h1>
                     <h2>Welcome to IronProfile!</h2>
-                </div>
-
-                <div className="btn">
-                    <p>If you signup, you agree with all our terms and conditions where we can do whatever we want with the data</p>
-                    <Link to={"/login"}><button>Create the account</button></Link>
                 </div>
             </section>
         </div>

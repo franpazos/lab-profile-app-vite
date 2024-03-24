@@ -19,7 +19,7 @@ function LoginPage(props) {
     const navigate = useNavigate()
 
     const handleInputChange = e => {
-        const { username, password } = e.target
+        const { name, value } = e.target
         setUserData((prevUserData) => ({
             ...prevUserData,
             [name]: value
@@ -58,7 +58,7 @@ function LoginPage(props) {
                         onChange={handleInputChange}
                     />
 
-                    <label>Username</label>
+                    <label>Password</label>
                     <input
                         type="password"
                         name='password'
